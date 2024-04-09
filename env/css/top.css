@@ -1,0 +1,81 @@
+.top-container {
+    display: flex;
+    z-index: 1;
+    align-items: center;
+    align-self: center;
+    justify-items: center;
+    /* padding-bottom: 40px; */
+    justify-content: center;
+    background-color: #333;
+    position: fixed;
+    width: 100%;
+}
+
+.top-list {
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    /* position: fixed; */
+    width: 100%;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+    /* padding-top: 2.5%; */
+}
+
+.top-list li {
+    padding: 10px 20px;
+    float: left;
+    cursor: pointer;
+    transition: 0.5s;
+    align-self: start;
+}
+
+.top-list li a {
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.active-html {
+    background-color: rgb(1, 200, 1);
+    border-radius: 10px;
+}
+
+.active-html:hover {
+    background-color: rgb(1, 190, 1);
+}
+
+.unactive-html:hover {
+    background-color: black;
+    border-radius: 10px;
+}
+
+.account {
+    justify-content: end;
+    justify-items: end;
+}
+
+.svg-inline--fa {
+    /*Chnage color icon in taskbar*/
+    color: white;
+}
+
+.badge {
+    z-index: 1;
+    position: relative;
+    top: -8px;
+    right: -2px;
+    padding: 1.8px 8px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    margin-right: -5px;
+}
+
+.cart {
+    position: relative;
+}

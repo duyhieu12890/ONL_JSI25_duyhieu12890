@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./lib/6.4.2-font-awesome-all.css">
+    <link rel="stylesheet" href="./lib/4.1.1-bootstrap.min.css">
+    <link rel="stylesheet" href="./env/css/login.css">
+    <script src="./lib/4.1.1-boostap.min.js"></script>
+    <script src="./lib/3.2.1-jquery.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { getDatabase,get,ref,child } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyD93uvmE869OHm_azfWljTX8h5Sw-xvx8w",
+            authDomain: "endprojectjsi25.firebaseapp.com",
+            projectId: "endprojectjsi25",
+            storageBucket: "endprojectjsi25.appspot.com",
+            messagingSenderId: "843775249580",
+            appId: "1:843775249580:web:c26f88addafcb477aa6309",
+            measurementId: "G-0E8CNC107H"
+        };
+
+          // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase();
+        const auth = getAuth(app);
+        const dbref = ref(db);
+        console.log(db);
+
+
+        document.getElementById('btn').onclick = function() {
+            if (dd == false) {
+                checkDataLogin();
+                // console.log(dd);
+            } else if (dd == true) {
+                checkDataSignIn();
+                // console.log(dd);
+            }
+        }
+
+        function checkDataLogin() {
+            var checkEmail = document.getElementById('email').value;
+            var checkPass = document.getElementById('pass').value;
+            // console.log(dd);
+            if (checkEmail == "") {
+                alert('Please put Email or username into box input');
+            } else if (checkPass == "") {
+                alert('Please put password into box input');
+            } else if (document.getElementById('checkbox-term').checked !== true) {
+                alert('Please indicate that you have read and accept agreements in tickbox');
+            } else {
+                // console.log(new userLogin(this.checkEmail, this.checkPass));
+                loginFireBase(checkEmail, checkPass);
+            };
+        };
+
+        function loginFireBase(email, pass){
+            console.log(email + '  ' + pass);
+            signInWithEmailAndPassword(auth, email, pass)
+            .then((credentials)=>{
+                console.log(credentials);
+                localStorage.status = 'true';
+            window.location.href = './home.html'
+
+            })
+            .catch((error)=>{
+                localStorage.status = 'false';
+                console.log(error.code);
+                alert(error.message);
+                console.log(error.message);
+            })
+            localStorage.dd = dd;
+        };
+
+    </script>
+</head>
+
+<body>
+    <!-- Done -->
+    <div class="container">
+        <div class="topNav">
+            <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="#">NDH</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="./home.html">
+                        <i class="fa fa-home"></i>
+                        Home
+                        <span class="sr-only"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fa fa-envelope-o">
+                          <span class="badge badge-danger">11</span>
+                        </i>
+                        Link
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">
+                        <i class="fa fa-envelope-o">
+                          <span class="badge badge-warning">11</span>
+                        </i>
+                        Disabled
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-envelope-o">
+                          <span class="badge badge-primary">11</span>
+                        </i>
+                        Dropdown
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                      </div>
+                    </li>
+                  </ul>
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fa fa-bell">
+                          <span class="badge badge-info">11</span>
+                        </i>
+                        Test
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        <i class="fa fa-globe">
+                          <span class="badge badge-success">11</span>
+                        </i>
+                        Test
+                      </a>
+                    </li>
+                  </ul>
+                  <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                </div>
+              </nav>
+        </div>
+        <div class="content">
+            <div class="card-login">
+                <div class="card-white">
+                    <div class="card-image">
+                        <h2 class="card-heading">
+                            Get Started <br>
+                            <small id="title">Let us <span id="label-login-text">login</span> your account</small>
+                        </h2>
+                    </div>
+                    <div class="card-form">
+                        <form action="" id="form">
+                            <!-- <div class="input signUp" id="fuulName">
+                                <label for="" class="input-label">Full name</label><br>
+                                <input type="text" name="" value="" class="input-field" id="fullName" required>
+                            </div> -->
+                            <div class="input login" id="emailW">
+                                <label for="" class="input-label">Email</label><br>
+                                <input type="text" name="" value="" class="input-field login" id="email" required>
+                            </div>
+                            <div class="input login" id="password">
+                                <label for="" class="input-label">Password</label><br>
+                                <input type="password" name="" value="" class="input-field login" id="pass" required>
+                            </div>
+                            <div class="input signUp" id="signUp-display-pass">
+                                <label for="" class="input-label">Comfilm Password</label><br>
+                                <input type="password" name="" value="" class="input-field" id="comfilmPass" required>
+                            </div>
+                            <div class="action">
+                                <button type="button" class="action-button" id="btn">Get Started</button>
+                            </div>
+                            <div class="advanceLogin">
+                                <p class="advanLogin">Don't have account! </p>
+                                <a href="signUp.html" class="acc" id="signUp">Create an account</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="text-notification" id='text-notification'></div>
+                    <div class="card-info">
+                        <p>
+                            <input type="checkbox" name="" id="checkbox-term">I have read and agree to <a href="gnu.html">Terms and conditions(GNU)</a></p>
+                        </form>
+                        <a href="home.html">
+                            <p>Or continue without account and view only</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<script src="./lib/font-awesome-all.js"></script>
+<!-- <script src="./js/login.js"></script> -->
+<script>
+    const signUpInput = document.getElementsByClassName('signUp');
+const creAccoptionLabel = document.getElementsByClassName('advanLogin')[0];
+const accOption = document.getElementsByClassName('acc')[0];
+// const inputLabel1 = document.getElementsByClassName('input-label')[1];
+let dd = false;
+document.getElementById('signUp').onclick = function() {
+    if (dd == false) {
+        signUp();
+    } else if (dd == true) {
+        login();
+    };
+};
+document.getElementById('btn').onclick = function() {
+    if (dd == false) {
+        checkDataLogin();
+        // console.log(dd);
+    } else if (dd == true) {
+        checkDataSignIn();
+        // console.log(dd);
+    };
+};
+
+function signUp() {
+    // signUpInput[0].style.display = 'block';
+    // signUpInput[1].style.display = 'block';
+    // signUpInput[2].style.display = 'block';
+    creAccoptionLabel.innerText = 'Have account! ';
+    accOption.innerText = 'Login an account';
+    document.getElementById('signUp-display-pass').style.display = 'block';
+    dd = true;
+    // inputLabel1.innerText = 'Password';
+};
+
+function login() {
+    creAccoptionLabel.innerText = "Don't have account! ";
+    // signUpInput[0].style.display = 'none';
+    // signUpInput[1].style.display = 'none';
+    // signUpInput[2].style.display = 'none';
+    document.getElementById('signUp-display-pass').style.display = 'none';
+    accOption.innerText = 'Create an account';
+    dd = false;
+    // inputLabel1.innerText = 'Email or username';
+}
+
+// class userSignUp {
+//     fullName;
+//     userName;
+//     email;
+//     password;
+//     constructor(nameInput, userInput, emailInput, passInput) {
+//         this.userName = userInput;
+//         this.fullName = nameInput;
+//         this.email = emailInput;
+//         this.password = passInput;
+//     };
+//     submit() {
+//         const data = [{
+//             'user': this.userName,
+//             'pass': this.password,
+//             'email': this.email,
+//             'password': this.password,
+//         }];
+//         return data;
+//         // localStorage.setItem('user', data);
+//     };
+// }
+// class userLogin {
+//     nickNameOrEmail;
+//     pass;
+//     constructor(nickInput, passInput) {
+//         this.nickNameOrEmail = nickInput;
+//         this.pass = passInput;
+//     }
+//     submit() {
+//         const data = [{
+//             'user': this.nickNameOrEmail,
+//             'pass': this.pass,
+//         }];
+//         return data;
+//     }
+// }
+
+
+</script>
+<script src="./env/js/account.js"></script>
+<script src="./lib/md5.js"></script>
+<!-- <script>
+    checkBoxinGnu()
+</script> -->
+<script>
+    login();
+</script>
+</html>
