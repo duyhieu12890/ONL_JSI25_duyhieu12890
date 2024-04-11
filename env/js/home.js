@@ -1,0 +1,1 @@
+setInterval(function() { document.getElementById("btn-slide").click() }, 5000)
